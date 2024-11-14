@@ -17,7 +17,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, year, genre, posterUrl }) 
   };
 
   return (
-    <div className="movie-card">
+    <>
       {/* Image Section */}
       <div className="image-container">
         <img 
@@ -63,7 +63,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, year, genre, posterUrl }) 
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

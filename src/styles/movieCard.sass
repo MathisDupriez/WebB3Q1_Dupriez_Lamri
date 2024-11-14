@@ -15,21 +15,20 @@ $icon-container-width: 79px
 $icon-container-height: 32px
 $icon-height: 17.8px
 $icon-width: 25px
-$border-color : #fcfcfc
-
+$border-color: #fcfcfc
 
 .movie-card
-  position: relative
+  position: fixed
   width: $mobile-card-width
   min-height: $mobile-card-height
   min-width: $mobile-card-width
   max-height: $mobile-card-height
   height: 50%
-  background: rgba(253, 253, 253, 0.912) // vert
+  background: rgba(253, 253, 253, 0.912)
   border-radius: 29px
-  margin: 0 auto
-  transform-origin: top left
-  transform: scale(1)
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
 
   @media (min-width: $breakpoint-desktop)
     width: $desktop-card-width
@@ -40,8 +39,6 @@ $border-color : #fcfcfc
     flex-direction: row
     padding: 20px
     gap: 1px
-
-
 
   // Main image container
   .image-container
@@ -56,13 +53,15 @@ $border-color : #fcfcfc
     width: 400px
     border-radius: 30px
     overflow: hidden
+    touch-action: none
+    -webkit-user-select: none
+    user-select: none
 
     @media (min-width: $breakpoint-desktop)
       position: relative
       top: 0
       left: 0
       transform: none
-  
       flex-shrink: 0
   
   .content-wrapper
@@ -72,7 +71,6 @@ $border-color : #fcfcfc
       flex-direction: column
       justify-content: space-between
       padding: 20px 0
-
     
     // Movie poster image
     .poster-image
@@ -82,6 +80,9 @@ $border-color : #fcfcfc
       object-fit: cover
       border-radius: 13px
       box-shadow: -4px 7px 4.2px -2px $shadow-color
+      will-change: transform
+      transition: transform 0.3s ease-out
+      touch-action: none
 
       // TODO : put the gradient HERE for SASS
       @import "gradient"
@@ -97,21 +98,20 @@ $border-color : #fcfcfc
         filter: drop-shadow(0px 4px 4px $shadow-color)
 
   .info-icon
-      position: absolute
-      bottom : 93px
-      right: 7px
-      width: 48px  // Augmenté de 32px à 48px
-      height: 48px // Augmenté de 32px à 48px
-      border-radius: 50%
-      display: flex
-      align-items: center
-      justify-content: center
-      z-index: 10
-      
-      .icon
-        width: 24px  // Augmenté de 20px à 24px
-        height: 24px // Augmenté de 20px à 24px
-
+    position: absolute
+    bottom: 93px
+    right: 7px
+    width: 48px
+    height: 48px
+    border-radius: 50%
+    display: flex
+    align-items: center
+    justify-content: center
+    z-index: 10
+    
+    .icon
+      width: 24px
+      height: 24px
 
   // Movie title
   .movie-title
@@ -159,25 +159,24 @@ $border-color : #fcfcfc
     align-items: center
     justify-content: center
     cursor: pointer
-    // Removed overflow: hidden to allow circle to overflow
 
     @media (min-width: $breakpoint-desktop)
       top: 30px
       right: 30px
 
-    
     &::before
       content: ''
       position: absolute
-      width: 41px              // Even larger circle
-      height: 39px             // Maintained perfect circle
+      width: 41px
+      height: 39px
       background: white
       border-radius: 50%
       transition: transform 0.3s ease-in-out
-      z-index: 3              // Increased to ensure it's above everything
+      z-index: 3
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
       top: 50%
-      transform: translateY(-50%)
+      left: 50%
+      transform: translate(-50%, -50%)
 
     .icons-wrapper
       position: relative
@@ -185,8 +184,8 @@ $border-color : #fcfcfc
       display: flex
       justify-content: space-between
       align-items: center
-      z-index: 4              // Above the white circle
-      padding: 0 5px         // Increased padding for more space between icons
+      z-index: 4
+      padding: 0 5px
 
       img
         width: 27px
@@ -196,7 +195,7 @@ $border-color : #fcfcfc
 
     &.video-active
       &::before
-        transform: translate(-20px, -50%)  // Adjusted for new spacing
+        transform: translate(calc(-50% - 20px), -50%)
       .camera-icon
         filter: none
       .heart-icon
@@ -204,7 +203,7 @@ $border-color : #fcfcfc
 
     &.heart-active
       &::before
-        transform: translate(20px, -50%)  // Adjusted for new spacing
+        transform: translate(calc(-50% + 20px), -50%)
       .camera-icon
         filter: grayscale(100%) opacity(0.6)
       .heart-icon
@@ -224,26 +223,7 @@ $border-color : #fcfcfc
       transform: none
       margin-top: auto
       justify-content: center
-      transform: scale(1.2) // c'est la taille de la card qui rend les boutons plus petits 
-    
-    .button
-      width: 55px
-      height: 55px
-      background: #fcfcfc
-      border-radius: 50%
-      box-shadow: 0px 4px 4px $shadow-color
-      display: flex
-      align-items: center
-      justify-content: center
-      cursor: pointer
-      transition: transform 0.2s ease
-      
-      &:hover
-        transform: scale(1.1)
-      
-      img
-        width: 25px
-        height: 25px
+      transform: scale(1.2)
     
     .button
       width: 55px

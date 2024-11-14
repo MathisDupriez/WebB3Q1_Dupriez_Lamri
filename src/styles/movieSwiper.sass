@@ -1,0 +1,48 @@
+// Import fonts
+@import "fonts"
+
+// Variables
+$swiper-width: 100%
+$swiper-height: 100%
+$breakpoint-desktop: 1024px
+
+.movie-swiper
+  position: relative
+  width: $swiper-width
+  height: $swiper-height
+  touch-action: none
+
+  // Pour empêcher le scroll de la page pendant le swipe
+  &:active
+    cursor: grabbing
+
+  .image-container
+    position: relative
+    touch-action: none
+    user-select: none
+    -webkit-user-select: none
+
+  .poster-image
+    will-change: transform
+    transition: transform 0.3s ease-out
+
+  // Animation de sortie
+  .swipe-exit-left
+    transform: translateX(-200%) rotate(-30deg)
+
+  .swipe-exit-right
+    transform: translateX(200%) rotate(30deg)
+
+  // Animation d'entrée
+  .swipe-enter
+    transform: translateX(0) rotate(0deg)
+    transition: transform 0.3s ease-out
+
+  @media (min-width: $breakpoint-desktop)
+    .image-container
+      // Ajustements spécifiques pour desktop si nécessaire
+      position: relative
+    
+    .poster-image
+      // Ajustements spécifiques pour desktop si nécessaire
+      transition: transform 0.3s ease-out
