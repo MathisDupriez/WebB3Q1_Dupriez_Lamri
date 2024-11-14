@@ -1,59 +1,46 @@
+// styles.sass
+@tailwind base
+@tailwind components
+@tailwind utilities
+
 .login-page
-  display: flex
-  justify-content: center
-  align-items: center
-  height: 100vh
-  background-color: #f0f0f0
+  @apply min-h-screen flex justify-center items-center bg-gradient-to-b from-blue-50 to-blue-100
 
-  .login-card
-    background-color: white
-    padding: 2rem
-    border-radius: 8px
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
-    width: 100%
-    max-width: 400px
+.login-card
+  @apply bg-white p-8 rounded-lg shadow-lg w-full max-w-xs md:max-w-md transition-transform duration-300 ease-in-out
 
-    h2
-      text-align: center
-      margin-bottom: 1.5rem
-      color: #333
+  &:hover
+    @apply md:transform md:scale-105 md:shadow-2xl
 
-    form
-      display: flex
-      flex-direction: column
-      gap: 1rem
+  h2
+    @apply text-center text-2xl font-semibold text-gray-800 mb-6
 
-      input
-        padding: 0.75rem 1rem
-        border: 1px solid #ccc
-        border-radius: 4px
-        font-size: 1rem
-        transition: border-color 0.3s ease
+  form
+    @apply flex flex-col gap-4
 
-        &:focus
-          border-color: #007bff
-          outline: none
+    input
+      @apply p-3 border border-gray-300 rounded-md text-base transition duration-300 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none placeholder-gray-400
 
-      button
-        background-color: #007bff
-        color: white
-        padding: 0.75rem 1rem
-        border: none
-        border-radius: 4px
-        font-size: 1rem
-        cursor: pointer
-        transition: background-color 0.3s ease
+    button
+      @apply bg-blue-500 text-white p-3 rounded-md text-base font-medium cursor-pointer transition duration-300 ease-in-out shadow-md
 
-        &:hover
-          background-color: #0056b3
+      &:hover
+        @apply bg-blue-600
+      &:focus
+        @apply outline-none ring-2 ring-blue-400
 
-      .register-link
-        text-align: center
-        margin-top: 1rem
-        
-        a
-          color: #007bff
-          text-decoration: none
-          
-          &:hover
-            text-decoration: underline
+    .error-message
+      @apply text-center text-red-500 text-sm
+
+.register-link
+  @apply text-center mt-4 text-sm text-gray-600
+  
+  a
+    @apply text-blue-500 font-medium no-underline transition duration-300 ease-in-out relative
+    padding-bottom: 2px
+    border-bottom: 2px solid transparent
+
+    &:hover
+      @apply text-blue-700
+      border-color: currentColor
+      text-decoration: none    

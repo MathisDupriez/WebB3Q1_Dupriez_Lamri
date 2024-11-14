@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/register.sass';
+import '../../styles/register.sass';
 
 const RegisterPage: React.FC = () => {
     const [formData, setFormData] = useState({
