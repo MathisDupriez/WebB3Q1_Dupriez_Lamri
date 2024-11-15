@@ -1,0 +1,42 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+.register-page
+  @apply min-h-screen flex justify-center items-center bg-gradient-to-b from-purple-50 to-purple-100 px-4 sm:px-6
+
+.register-card
+  @apply bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-300 ease-in-out
+
+  &:hover
+    @apply md:transform md:scale-105 md:shadow-2xl
+
+  h2
+    @apply text-center text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6
+
+  form
+    @apply flex flex-col gap-3 sm:gap-4 lg:gap-5
+
+    input
+      @apply p-3 sm:p-4 border border-gray-300 rounded-md text-sm sm:text-base transition duration-300 ease-in-out focus:border-purple-500 focus:ring-2 focus:ring-purple-300 outline-none placeholder-gray-400
+
+    button
+      @apply bg-purple-500 text-white p-3 sm:p-4 rounded-md text-sm sm:text-base font-medium cursor-pointer transition duration-300 ease-in-out shadow-md
+
+      &:hover
+        @apply bg-purple-600
+      &:focus
+        @apply outline-none ring-2 ring-purple-400
+
+    .error-message
+      @apply text-center text-red-500 text-xs sm:text-sm
+
+.login-link
+  @apply text-center mt-4 text-xs sm:text-sm text-gray-600
+
+  a
+    @apply text-purple-500 font-medium no-underline transition duration-300 ease-in-out relative
+
+    &:hover
+      @apply text-purple-700
+      text-decoration: underline

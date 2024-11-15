@@ -1,20 +1,23 @@
-// src/components/LoginForm.tsx
 import React, { useState, useEffect } from 'react';
-import '../../styles/login.sass';
+import { useNavigate } from 'react-router-dom'; // Assurez-vous que react-router-dom est installé et configuré
+import axios from 'axios'; // Importation de la bibliothèque Axios
+
+import './login.sass';
 
 const LoginForm: React.FC = () => {
-    const [email, setEmail] = useState(''); // Déclencheur de l'effet
-    const [password, setPassword] = useState(''); // Déclencheur de l'effet
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Utilisé pour la redirection
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const form = e.target as HTMLFormElement;
         const emailInput = (form.elements.namedItem("email") as HTMLInputElement).value;
         const passwordInput = (form.elements.namedItem("password") as HTMLInputElement).value;
-        
+
         setEmail(emailInput);
         setPassword(passwordInput);
     };
@@ -24,35 +27,43 @@ const LoginForm: React.FC = () => {
             if (!email || !password) return;
 
             setLoading(true);
-            setErrorMessage(''); // Réinitialise le message d'erreur
+            setErrorMessage('');
 
             try {
-                const response = await fetch('http://localhost:3000/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, password }),
+                const response = await axios.post('http://localhost:3000/login', {
+                    email,
+                    password,
                 });
 
-                if (!response.ok) {
-                    throw new Error('Failed to login');
-                }
-
-                const data = await response.json();
+                const data = response.data; // Axios gère automatiquement le JSON
                 console.log('Login successful:', data);
-                // Gérer la redirection ou le stockage du token ici
 
-            } catch (error) {
-                setErrorMessage('Login failed. Please check your credentials.');
-                console.error(error);
-            } finally {
+                // Stocker le token dans le localStorage
+                if (data.token) {
+                    localStorage.setItem('authToken', data.token);
+                    console.log('Token stored in localStorage:', data.token);
+                    navigate('/'); // Redirection vers la page d'accueil
+                } else {
+                    throw new Error('Un problème est survenu lors de la connexion, veuillez réessayer dans quelques instants.');
+                }
+            } catch (error: unknown) {
+                if (axios.isAxiosError(error)) {
+                    // Axios-specific error handling
+                    setErrorMessage(
+                        error.response?.data?.message || 'Login failed. Please check your credentials.'
+                    );
+                } else {
+                    // Generic error handling
+                    setErrorMessage('An unexpected error occurred.');
+                    console.error('Unexpected error:', error);
+                }
+            }finally {
                 setLoading(false);
             }
         };
 
         login();
-    }, [email, password]);
+    }, [email, password, navigate]);
 
     return (
         <form onSubmit={handleSubmit}>

@@ -53,13 +53,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, year, genre, posterUrl }) 
         {/* Action Buttons */}
         <div className="action-buttons">
           <button className="button multiply">
-            <img src="./public/cross.png" alt="cross" />
+            <img src="./cross.png" alt="cross" />
           </button>
           <button className="button replay">
-            <img src="./public/arrow.svg" alt="arrows" />
+            <img src="./arrow.svg" alt="arrows" />
           </button>
           <button className="button heart">
-            <img src="./public/heart.svg" alt="heart" />
+            <img src="./heart.svg" alt="heart" />
           </button>
         </div>
       </div>

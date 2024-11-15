@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/Login/LoginPage';
 import RegisterPage from './components/Register/RegisterPage';
-import MovieSwiper from './components/MovieSwiper';
+import MovieSwiper from './components/Movie/MovieSwiper';
 
 const App: React.FC = () => {
   return (
