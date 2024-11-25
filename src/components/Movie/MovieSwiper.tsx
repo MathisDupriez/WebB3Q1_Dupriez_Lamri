@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import '../styles/movieCard.sass';
+import './movieCard.sass';
 
 interface MovieCardProps {
   title: string;

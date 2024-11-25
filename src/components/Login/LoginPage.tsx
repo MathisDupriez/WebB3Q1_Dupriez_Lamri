@@ -1,6 +1,6 @@
 // src/components/LoginPage.tsx
 import React from 'react';
-import '../../styles/login.sass';
+import './login.sass';
 import LoginForm from './LoginForm';
 
 const LoginPage: React.FC = () => {
