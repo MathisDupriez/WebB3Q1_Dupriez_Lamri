@@ -128,6 +128,7 @@ const MovieSwiper: React.FC = () => {
   }, [currentIndex]);
 
   const currentMovie = moviesData[currentIndex];
+  
   return (
     <div className="movie-card">
       <div className="image-container" 

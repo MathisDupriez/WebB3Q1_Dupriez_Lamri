@@ -1,0 +1,88 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+.dashboard
+  @apply p-4 flex flex-col gap-6
+
+  h1
+    @apply text-2xl font-bold text-center text-gray-800
+
+  section
+    @apply flex flex-col gap-3
+
+  /* Top Bar */
+  .top-bar
+    @apply flex justify-between items-center bg-gray-100 text-gray-800 p-3 rounded-lg shadow-md sticky top-0 z-10
+
+    .time
+      @apply text-xl font-bold
+
+    .settings-button
+      @apply bg-transparent border-none text-2xl cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-blue-500
+
+  /* Films à venir */
+  .upcoming-movies
+    h2
+      @apply text-xl text-gray-600 mb-3
+
+    .movie-list-horizontal
+      @apply flex flex-row gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-gray-300
+
+      &::-webkit-scrollbar
+        @apply h-1.5
+
+      &::-webkit-scrollbar-thumb
+        @apply bg-gray-300 rounded
+
+      .movie-item
+        @apply flex flex-col items-center justify-start flex-shrink-0 w-28 gap-2 bg-white rounded-lg shadow-lg p-2
+
+        .movie-poster
+          @apply w-full h-36 rounded-lg object-cover shadow-sm
+
+        .movie-title
+          @apply text-sm text-center text-gray-800 font-semibold truncate
+
+  /* Membres de la famille */
+  .family-status
+    h2
+      @apply text-xl text-gray-600 mb-2
+
+    h3
+      @apply text-lg text-gray-500 mb-4
+
+    ul
+      @apply list-none p-0
+
+    .family-member
+      @apply flex justify-between items-center p-2.5 bg-gray-100 rounded-lg shadow-sm cursor-pointer transition-all duration-200
+
+      &.selected
+        @apply bg-blue-500 text-white
+
+      &.online
+        @apply border-l-4 border-green-500
+
+      &.offline
+        @apply border-l-4 border-red-500
+
+      &:hover
+        @apply transform translate-y-[-2px] shadow-lg
+
+      .member-name
+        @apply font-bold
+
+      .status
+        @apply text-sm
+
+  /* Lancer le jeu */
+  .game-launcher
+    h2
+      @apply text-xl text-gray-600 mb-2
+
+    .start-game-button
+      @apply bg-blue-500 text-white text-base py-2 px-5 rounded-md cursor-pointer transition-colors duration-200
+
+      &:hover
+        @apply bg-blue-700
