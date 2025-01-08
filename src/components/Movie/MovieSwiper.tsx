@@ -143,6 +143,7 @@ const MovieSwiper: React.FC = () => {
   const currentMovie = movies[currentIndex];
   if (!currentMovie) return null;
 
+  
   return (
     <div className={`movie-card ${isFamily ? 'family-mode' : ''}`}>
       {/* Header */}
