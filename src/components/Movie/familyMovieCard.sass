@@ -1,0 +1,55 @@
+.movie-card.family-mode
+    .like-counter
+        position: absolute
+        top: 20px
+        right: 20px
+        background: rgba(255, 255, 255, 0.9)
+        padding: 8px 16px
+        border-radius: 20px
+        font-size: 18px
+        z-index: 10
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+        display: flex
+        align-items: center
+        gap: 8px
+        color: #ff4757
+
+
+    .family-instructions
+        position: absolute
+        bottom: 100px
+        left: 0
+        right: 0
+        text-align: center
+        color: white
+        background: rgba(0, 0, 0, 0.7)
+        padding: 12px
+        font-size: 14px
+
+
+    .movie-info
+        .movie-title
+            font-size: 28px // smaller title to let space for the like counter
+    
+
+    // swipe indicators
+    &::after
+        content: ''
+        position: absolute
+        top: 50%
+        width: 80px
+        height: 80px
+        border-radius: 50%
+        opacity: 0
+        transition: opacity 0.3s 
+
+    
+    &.swipe-right::after
+        right: -100px
+        background: rgba(46, 213, 155, 0.2)
+        opacity: 1
+
+    &.swipe-left::after
+        left: -100px
+        background: rgba(255, 71, 87, 0.2)
+        opacity: 1

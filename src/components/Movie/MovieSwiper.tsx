@@ -1,60 +1,83 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './movieCard.sass';
 
-interface MovieCardProps {
-  title: string;
-  year: string;
-  genre: string;
-  posterUrl: string;
-}
-
 interface Movie {
-  id: number;
   title: string;
-  year: string;
-  genre: string;
-  posterUrl: string;
+  release_date: string;
+  genre_ids: number[];
+  poster_path: string;
+  likes?: number; // optionnal because only present in the family mode
 }
-
-const moviesData: Movie[] = [
-  {
-    id: 1,
-    title: "Inception",
-    year: "2010",
-    genre: "Sci-Fi",
-    posterUrl: "https://media.senscritique.com/media/000004710747/0/inception.jpg"
-  },
-  {
-    id: 2,
-    title: "The Dark Knight",
-    year: "2008",
-    genre: "Action",
-    posterUrl: "https://fr.web.img2.acsta.net/medias/nmedia/18/63/97/89/18949761.jpg"
-  },
-  {
-    id: 3,
-    title: "Interstellar",
-    year: "2014",
-    genre: "Sci-Fi",
-    posterUrl: "https://fr.web.img5.acsta.net/pictures/14/09/24/12/08/158828.jpg"
-  }
-];
 
 const MovieSwiper: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const [activeIcon, setActiveIcon] = useState<'video' | 'heart'>('video');
-  const [isDragging, setIsDragging] = useState(false);
+  const isFamily = activeIcon === 'heart';
   const dragStartX = useRef(0);
   const dragCurrentX = useRef(0);
   const imageRef = useRef<HTMLImageElement>(null);
 
+
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+
+
+  useEffect(() => {
+    if (currentIndex >= movies.length - 3) {
+      fetchMovies();
+    }
+  }, [currentIndex]);
+
+
+  useEffect(() => {
+    // reset and refetch when changing mode
+    setCurrentIndex(0);
+    setMovies([]);
+    fetchMovies();
+  }, [isFamily]); // use effect for managing mode switch
+
+
+  useEffect(() => {
+    if (imageRef.current) {
+      imageRef.current.style.transition = 'none';
+      imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
+      imageRef.current.offsetHeight;
+      imageRef.current.style.transition = 'transform 0.3s ease-out';
+    }
+  }, [currentIndex]);
+
+
+
+  const fetchMovies = async () => {
+    try {
+      const url = isFamily ? '/movies/liked' : '/movies';
+      const response = await fetch(`http://localhost:3000${url}?page=${currentPage}`);
+      const data = await response.json();
+      setMovies(prevMovies => [...prevMovies, ...data.movies]);
+      setCurrentPage(prev => prev + 1);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Erreur lors du chargement des films:', error);
+      setIsLoading(false);
+    }
+  };
+
+  const getFullImagePath = (path: string) => {
+    return `https://image.tmdb.org/t/p/w500${path}`;
+  };
+
   const toggleIcon = () => {
-    setActiveIcon(prev => prev === 'video' ? 'heart' : 'video'); // permet de changer l'icone "active" en cliquant dessus
+    setActiveIcon(prev => prev === 'video' ? 'heart' : 'video');
   };
 
   const handleDragStart = (e: React.TouchEvent) => {
     e.preventDefault();
-    setIsDragging(true);
     const touch = e.touches[0];
     dragStartX.current = touch.clientX;
     dragCurrentX.current = touch.clientX;
@@ -65,8 +88,6 @@ const MovieSwiper: React.FC = () => {
   };
 
   const handleDragMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    
     const touch = e.touches[0];
     dragCurrentX.current = touch.clientX;
     
@@ -77,9 +98,6 @@ const MovieSwiper: React.FC = () => {
   };
 
   const handleDragEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-
     const deltaX = dragCurrentX.current - dragStartX.current;
     const threshold = window.innerWidth * 0.3;
 
@@ -105,7 +123,7 @@ const MovieSwiper: React.FC = () => {
       imageRef.current.style.transform = 'translateX(-200%) rotate(-30deg)';
     }
     setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % moviesData.length);
+      setCurrentIndex(prev => prev + 1);
     }, 300);
   };
 
@@ -114,23 +132,21 @@ const MovieSwiper: React.FC = () => {
       imageRef.current.style.transform = 'translateX(200%) rotate(30deg)';
     }
     setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % moviesData.length);
+      setCurrentIndex(prev => prev + 1);
     }, 300);
   };
 
-  useEffect(() => {
-    if (imageRef.current) {
-      imageRef.current.style.transition = 'none';
-      imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
-      imageRef.current.offsetHeight; // Force reflow
-      imageRef.current.style.transition = 'transform 0.3s ease-out';
-    }
-  }, [currentIndex]);
+  if (isLoading) {
+    return <div>Chargement...</div>;
+  }
 
-  const currentMovie = moviesData[currentIndex];
+  const currentMovie = movies[currentIndex];
+  if (!currentMovie) return null;
+
   
   return (
-    <div className="movie-card">
+    <div className={`movie-card ${isFamily ? 'family-mode' : ''}`}>
+      {/* Header */}
       <div className="image-container" 
         onTouchStart={handleDragStart}
         onTouchMove={handleDragMove}
@@ -139,45 +155,50 @@ const MovieSwiper: React.FC = () => {
         <img
           ref={imageRef}
           className="poster-image"
-          src={currentMovie.posterUrl}
+          src={getFullImagePath(currentMovie.poster_path)}
           alt={currentMovie.title}
         />
+        {isFamily && currentMovie.likes && (
+          <div className="likes-count">
+            ❤️ {currentMovie.likes}
+          </div>
+        )}
       </div>
-
+  
       <div className="content-wrapper">
-        {/* Correction ici : suppression de la div englobante superflue */}
         <div className={`video-icon ${activeIcon}-active`} onClick={toggleIcon}>
           <div className="icons-wrapper">
-            <img src="./public/video.svg" alt="camera" className="camera-icon" />
-            <img src="./public/tabheart.svg" alt="heart" className="heart-icon" />
+            <img src="/public/video.svg" alt="camera" className="camera-icon" />
+            <img src="/public/tabheart.svg" alt="heart" className="heart-icon" />
           </div>
         </div>
-
+  
         <div className="movie-info">
           <h1 className="movie-title">{currentMovie.title}</h1>
           <div className="movie-meta">
-            TRENDING {currentMovie.genre} {currentMovie.year}
+            {isFamily ? 'SÉLECTION FAMILLE' : 'TRENDING'} {currentMovie.release_date.split('-')[0]}
           </div>
         </div>
-
+  
         <div className="info-icon">
-          <img src="./public/info.svg" alt="info" className="icon" />
+          <img src="/public/info.svg" alt="info" className="icon" />
         </div>
-
+  
         <div className="action-buttons">
-          <button className="button multiply">
-            <img src="./public/cross.png" alt="cross" />
+          <button className="button multiply" onClick={handleSwipeLeft}>
+            <img src="/public/cross.png" alt="cross" />
           </button>
           <button className="button replay">
-            <img src="./public/arrow.svg" alt="arrows" />
+            <img src="/public/arrow.svg" alt="arrows" />
           </button>
-          <button className="button heart">
-            <img src="./public/heart.svg" alt="heart" />
+          <button className="button heart" onClick={handleSwipeRight}>
+            <img src="/public/heart.svg" alt="heart" />
           </button>
         </div>
       </div>
     </div>
   );
-};
+
+}
 
 export default MovieSwiper;
