@@ -4,7 +4,7 @@ import { LoginProvider } from './contexts/LoginContext';
 import ProtectedRoute from './components/Login/ProtectedRoute';
 import LoginPage from './components/Login/LoginPage';
 import RegisterPage from './components/Register/RegisterPage';
-import MovieSwiper from './components/Movie/vieSwiper';
+import MovieSwiper from './components/Movie/MovieSwiper';
 import Dashboard from './components/Dashboard/Dashboard';
 
 const App: React.FC = () => {
