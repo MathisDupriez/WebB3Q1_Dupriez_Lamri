@@ -7,7 +7,15 @@ export default {
     "./src/**/*.{sass,scss}",     // Inclure tous les fichiers SASS et SCSS dans src
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'heebo': ['Heebo', 'sans-serif'],
+        'alexandria': ['Alexandria', 'sans-serif'],
+      },
+      backgroundImage: {
+        'card-gradient': 'linear-gradient(360deg, rgba(0, 0, 0, 0.44) 80%, rgba(0, 0, 0, 0.44) 80%, rgba(0, 0, 0, 0.22) 80%, rgba(102, 102, 102, 0) 100%)',
+      }
+    },
   },
   plugins: [
     require('tailwind-scrollbar'),

@@ -9,6 +9,8 @@ import ProfilePage from './components/Profil/ProfilPage';
 import { LoginProvider } from './contexts/LoginContext';
 import { UserProvider } from './contexts/UserContext';
 import { MovieProvider } from './contexts/MovieContext';
+import BaseMovieSwiper from './components/Movie/BaseMovieSwiper';
+import FamilyMovieSwiper from './components/Movie/FamilyMovieSwiper';
 
 const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -44,16 +46,14 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route 
+            path="/swiperfamily" 
+            element={
+              <ProtectedRoute>
+                <FamilyMovieSwiper />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </AppProviders>
     </Router>
