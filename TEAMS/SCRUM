@@ -1,0 +1,184 @@
+Documentation SCRUM : Backend et Frontend
+
+Sprint 1 : du 3 octobre 2024 au 17 octobre 2024
+
+Backend - Réalisations
+
+Mise en place de la base du projet avec un serveur Express.
+
+Création du fichier README.md avec les bases du projet et initialisation d'une documentation.
+
+Intégration de Jenkins pour la CI/CD.
+
+Début de la structuration du dossier principal (organisation initiale).
+
+Frontend - Réalisations
+
+Initialisation du projet frontend.
+
+Création des premières bases de la page principale et du choix des films.
+
+Points non réalisés
+
+Backend : Les modèles avancés n’ont pas été intégrés durant ce sprint.
+
+Backend : Aucune fonctionnalité utilisateur développée.
+
+Frontend : Aucune fonctionnalité utilisateur n’a été intégrée au frontend.
+
+Remarques
+
+Le sprint a permis de poser les fondations techniques solides pour le backend et le frontend.
+
+Sprint 2 : du 17 octobre 2024 au 7 novembre 2024
+
+Backend - Réalisations
+
+Ajout des modèles d'e-mail et des fonctionnalités pour les utilisateurs.
+
+Amélioration et réorganisation de la structure des fichiers.
+
+Documentation mise à jour pour le système de fichiers et la gestion des utilisateurs.
+
+Création d’un helper pour la gestion des commandes Git.
+
+Finalisation de la logique utilisateur de base.
+
+Frontend - Réalisations
+
+Création des pages de connexion et d'inscription.
+
+Ajout des premiers tests de design avec TailwindCSS.
+
+Finalisation des pages principales pour l’interaction utilisateur initiale.
+
+Points non réalisés
+
+Backend : Certaines fonctionnalités avancées liées à la connexion et aux tokens ont été reportées.
+
+Frontend : Les transitions avancées et la liaison complète au backend ont été reportées.
+
+Remarques
+
+Le sprint a vu une nette avancée dans la fonctionnalité utilisateur et dans la documentation pour les deux parties.
+
+Sprint 3 : du 7 novembre 2024 au 28 novembre 2024
+
+Backend - Réalisations
+
+Révision et restructuration des configurations.
+
+Mise en place de la logique de tokens (création d’un nettoyeur de tokens).
+
+Gestion de la connexion améliorée.
+
+Documentation mise à jour pour l’API et le système d’environnement.
+
+Finalisation d’une interface pour protéger les endpoints.
+
+Frontend - Réalisations
+
+Intégration initiale des interactions utilisateur.
+
+Amélioration du design des pages de connexion et des transitions.
+
+Début de la liaison avec les endpoints backend pour l’authentification.
+
+Points non réalisés
+
+Backend : Certaines fonctionnalités documentées pour l'intégration frontend n'ont pas encore été ajoutées.
+
+Frontend : La page de gestion des familles n’a pas encore été commencée.
+
+Remarques
+
+TechnoCampus a perturbé la progression mais le sprint a permis d'implémenter des améliorations techniques majeures dans les deux parties.
+
+Sprint 4 : du 28 novembre 2024 au 12 décembre 2024
+
+Backend - Réalisations
+
+Renommage et réorganisation des dossiers.
+
+Correction des bugs liés à l’interface utilisateur et à la logique backend.
+
+Documentation approfondie pour les nouveaux modules et endpoints.
+
+Ajout d’une compatibilité initiale avec la logique « famille ».
+
+Frontend - Réalisations
+
+Finalisation de la gestion des familles.
+
+Ajout d’un design responsive.
+
+Amélioration des transitions sur les pages principales et secondaires.
+
+Points non réalisés
+
+Backend : Les tests poussés des nouvelles fonctionnalités n'ont pas été effectués.
+
+Frontend : Les tests utilisateurs n’ont pas été réalisés.
+
+Remarques
+
+Ce sprint a permis de stabiliser la base et de préparer des fonctionnalités avancées pour le frontend et le backend.
+
+Sprint 5 : du 12 décembre 2024 au 19 décembre 2024
+
+Backend - Réalisations
+
+Intégration de la fonctionnalité « famille ».
+
+Ajout des fonctionnalités de « likes » et d’intégration des routes pour l’API TMDb.
+
+Finalisation des tests et correction des problèmes restants.
+
+Mise à jour de la documentation pour inclure les nouvelles fonctionnalités.
+
+Frontend - Réalisations
+
+Intégration de la fonctionnalité « famille » côté interface.
+
+Ajout de la page de gestion des films et des descriptions.
+
+Finalisation des animations et des transitions pour améliorer l’expérience utilisateur.
+
+Points non réalisés
+
+Backend : Quelques optimisations backend signalées ont été repoussées.
+
+Frontend : Les tests unitaires n’ont pas encore été mis en place.
+
+Remarques
+
+Le projet backend et frontend ont atteint un état stable et fonctionnel en vue de la mise en production.
+
+Sprint 6 : du 19 décembre 2024 au 9 janvier 2025
+
+Backend - Réalisations
+
+Amélioration de la gestion des processus backend (arrêt des démons correctement).
+
+Ajustements liés au déploiement multi-environnement.
+
+Finalisation des routes pour la logique des films et de la famille.
+
+Frontend - Réalisations
+
+Ajout des dernières pages de description des films.
+
+Correction des derniers bugs d’affichage et amélioration des performances.
+
+Amélioration de la gestion des interactions sur la page famille.
+
+Points non réalisés
+
+Backend : Tests automatisés complets toujours en cours d'intégration.
+
+Frontend : Tests utilisateurs approfondis toujours reportés.
+
+Remarques
+
+Ce sprint a été crucial pour la mise en production du backend et du frontend avec toutes les fonctionnalités prévues opérationnelles.
+
