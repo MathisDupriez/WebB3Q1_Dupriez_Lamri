@@ -3,8 +3,8 @@ import ApiService from './ApiService'; // Import de ton ApiService
 class LoginApiService {
     private apiService = ApiService.getInstance();
 
-    public async login(email: string, password: string): Promise<{ token: string; user: { id: string; email: string } }> {
-        return this.apiService.post<{ token: string; user: { id: string; email: string } }>('/login', { email, password });
+    public async login(email: string, password: string): Promise<{ token: string; user: { id: number; email: string, username : string, familyId : number } }> {
+        return this.apiService.post<{ token: string; user: { id: number; email: string, username:string, familyId : number} }>('/login', { email, password });
         }
 
     public setToken(token: string): void {

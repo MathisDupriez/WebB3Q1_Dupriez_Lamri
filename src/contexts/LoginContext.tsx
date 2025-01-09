@@ -21,12 +21,20 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const { setUser } = useUser(); // Accès au UserContext
 
-  // Vérifie si un token est présent au chargement
+  // Vérifie si un token et un utilisateur sont présents au chargement
   useEffect(() => {
     const token = LoginApiService.getToken();
-    if (token) {
-      setIsAuthenticated(true);
-      navigate('/'); // Redirection si l'utilisateur est déjà connecté
+    const storedUser = localStorage.getItem('user');
+
+    if (token && storedUser) {
+      try {
+        const user = JSON.parse(storedUser) as User;
+        setUser(user);
+        setIsAuthenticated(true);
+        navigate('/'); // Redirection si l'utilisateur est déjà connecté
+      } catch (error) {
+        console.error('Erreur lors de la récupération de l’utilisateur depuis le localStorage :', error);
+      }
     }
   }, []);
 
@@ -42,8 +50,9 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
 
         // Création d'une instance User
-        const user = new User(userData.id, userData.email);
+        const user = new User(userData.id, userData.email, userData.username, userData.familyId);
         setUser(user); // Mise à jour du UserContext
+        localStorage.setItem('user', JSON.stringify(user)); // Stocke l'utilisateur dans le localStorage
 
         navigate('/'); // Redirection après login
       } else {
@@ -64,6 +73,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     LoginApiService.clearToken(); // Supprime le token
     setIsAuthenticated(false);
     setUser(null); // Réinitialise les données utilisateur
+    localStorage.removeItem('user'); // Supprime l'utilisateur du localStorage
     navigate('/login'); // Redirection après logout
   };
 

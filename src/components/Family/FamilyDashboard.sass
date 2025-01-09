@@ -1,0 +1,50 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+.dashboard-container
+  @apply p-6 bg-gray-50 rounded-lg shadow-md max-w-4xl mx-auto flex flex-col gap-6 pb-[100px] 
+
+  &.no-family
+    @apply text-center flex items-center justify-center h-screen
+    p
+      @apply text-lg text-gray-600 mt-4
+
+.dashboard-title
+  @apply text-3xl font-bold text-gray-800 mb-4
+
+.dashboard-message
+  @apply text-lg text-gray-600 mt-4
+
+.dashboard-section
+  @apply flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4
+
+.section-title
+  @apply text-xl font-semibold text-gray-700
+
+.section-content
+  @apply text-base text-gray-600
+
+/* Liste des membres de la famille */
+.family-list
+  @apply list-none p-0 flex flex-col gap-3
+
+.family-list-item
+  @apply flex justify-between items-center bg-white p-4 rounded-md shadow-sm text-gray-700 border border-gray-200
+
+  &:hover
+    @apply shadow-lg bg-gray-100
+
+/* Liste des providers */
+.provider-list
+  @apply list-none p-0 flex flex-col gap-3
+
+.provider-list-item
+  @apply bg-gray-100 p-3 rounded-md shadow text-gray-700 border border-gray-300
+
+  &:hover
+    @apply bg-gray-200
+
+/* Barre de menu inférieure */
+.bottom-menu-bar
+  @apply fixed bottom-0 left-0 right-0 bg-white p-3 shadow-lg border-t border-gray-200

@@ -6,18 +6,23 @@ import RegisterPage from './components/Register/RegisterPage';
 import MovieSwiper from './components/Movie/MovieSwiper';
 import Dashboard from './components/Dashboard/Dashboard';
 import ProfilePage from './components/Profil/ProfilPage';
+import FamilyDashboard from './components/Family/FamilyDashboard';
+
 import { LoginProvider } from './contexts/LoginContext';
 import { UserProvider } from './contexts/UserContext';
 import { MovieProvider } from './contexts/MovieContext';
+import { FamilyProvider } from './contexts/FamilyContext';
 
 const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <UserProvider>
-      <MovieProvider>
-        <LoginProvider>
-        {children}
-        </LoginProvider>
-      </MovieProvider>
+      <FamilyProvider>
+        <MovieProvider>
+          <LoginProvider>
+          {children}
+          </LoginProvider>
+        </MovieProvider>
+      </FamilyProvider>
     </UserProvider>
   );
 };
@@ -49,6 +54,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+          <Route
+              path="/family"
+              element={
+                <ProtectedRoute>
+                  <FamilyDashboard />
                 </ProtectedRoute>
               }
             />
