@@ -15,11 +15,12 @@ class MovieApiService {
         return response.movies;
     }
 
-    // Récupérer les films de la famille
-    public async fetchFamilyMovies(page: number): Promise<Movie[]> {
-        const response = await this.apiService.get<{ movies: Movie[] }>(`/movies/liked?page=${page}`);
+        // Récupérer les films likés par tous les membres d'une famille
+    public async fetchFamilyMovies(familyId: number): Promise<Movie[]> {
+        const response = await this.apiService.post<{ movies: Movie[] }>(`/movies/family-likes`, { familyId });
         return response.movies;
     }
+
 }
 
 export default new MovieApiService(); // Export une instance unique de MovieApiService

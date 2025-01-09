@@ -12,7 +12,6 @@ import { LoginProvider } from './contexts/LoginContext';
 import { UserProvider } from './contexts/UserContext';
 import { MovieProvider } from './contexts/MovieContext';
 import { FamilyProvider } from './contexts/FamilyContext';
-import BaseMovieSwiper from './components/Movie/BaseMovieSwiper';
 import FamilyMovieSwiper from './components/Movie/FamilyMovieSwiper';
 
 const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {

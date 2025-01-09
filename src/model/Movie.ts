@@ -1,5 +1,6 @@
 export default class Movie {
 
+    public id: number;
     public adult: boolean;
     public backdrop_path: string;
     public genre_ids: number[];
@@ -16,6 +17,7 @@ export default class Movie {
 
 
     constructor(
+        id: number,
         adult: boolean,
         backdrop_path: string,
         genre_ids: number[],
@@ -30,6 +32,7 @@ export default class Movie {
         vote_average: number,
         vote_count: number
     ) {
+        this.id = id;
         this.adult = adult;
         this.backdrop_path = backdrop_path;
         this.genre_ids = genre_ids;
