@@ -51,7 +51,7 @@ export default class ApiService {
     );
   }
 
-  private getToken(): string | null {
+  public getToken(): string | null {
     return localStorage.getItem('authToken');
   }
 
@@ -69,8 +69,13 @@ export default class ApiService {
     // Redirection ou gestion supplémentaire ici si nécessaire
   }
 
-  public async get<T>(url: string, params?: Record<string, any>): Promise<T> {
-    const response = await this.axiosInstance.get<T>(url, { params });
+  // Méthodes HTTP
+  public async get<T>(url: string, data?: any): Promise<T> {
+    const response = await this.axiosInstance.request<T>({
+      method: 'GET',
+      url,
+      data, // Ajout du body dans les requêtes GET
+    });
     return response.data;
   }
 
@@ -84,8 +89,12 @@ export default class ApiService {
     return response.data;
   }
 
-  public async delete<T>(url: string): Promise<T> {
-    const response = await this.axiosInstance.delete<T>(url);
+  public async delete<T>(url: string, data?: any): Promise<T> {
+    const response = await this.axiosInstance.request<T>({
+      method: 'DELETE',
+      url,
+      data, // Ajout du body dans les requêtes DELETE
+    });
     return response.data;
   }
 }

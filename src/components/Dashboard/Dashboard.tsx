@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BottomMenuBar from '../Menu/Menu'; // Import du composant de menu
 import './Dashboard.sass';
 
-type FamilyMember = {
-  name: string;
-  isOnline: boolean;
-};
-
-type Movie = {
-  id: number;
-  title: string;
-  posterUrl: string;
-};
-
-type DashboardProps = {
-  familyMembers: FamilyMember[];
-  upcomingMovies: Movie[]; // Nouvelle prop pour les films à venir
-};
-
-const Dashboard: React.FC<DashboardProps> = ({ familyMembers, upcomingMovies }) => {
-  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+const Dashboard: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
   const navigate = useNavigate();
 
@@ -34,73 +18,28 @@ const Dashboard: React.FC<DashboardProps> = ({ familyMembers, upcomingMovies }) 
     return () => clearInterval(interval); // Nettoyage de l'intervalle lors du démontage
   }, []);
 
-  // Gestion de la sélection des membres de la famille
-  const toggleMemberSelection = (name: string) => {
-    setSelectedMembers((prev) =>
-      prev.includes(name) ? prev.filter((member) => member !== name) : [...prev, name]
-    );
-  };
-
-  // Lancer le jeu
-  const handleStartGame = () => {
-    if (selectedMembers.length > 0) {
-      navigate('/game');
-    } else {
-      alert('Veuillez sélectionner au moins un membre avant de lancer le jeu.');
-    }
+  // Naviguer vers la page "Start Liking"
+  const handleStartLiking = () => {
+    navigate('/like');
   };
 
   return (
-    <div className="dashboard">
-      {/* Top Bar */}
-      <div className="top-bar">
-        <span className="time">{currentTime}</span>
-        <button className="settings-button">
-          ⚙️
-        </button>
-      </div>
-
-      {/* Section des films à venir */}
-      <section className="upcoming-movies">
-        <h2>Films à venir</h2>
-        <div className="movie-list-horizontal">
-          {upcomingMovies.map((movie) => (
-            <div className="movie-item" key={movie.id}>
-              <img src={movie.posterUrl} alt={movie.title} className="movie-poster" />
-              <h3 className="movie-title">{movie.title}</h3>
-            </div>
-          ))}
+    <div>
+      <div className="dashboard">
+        {/* Top Bar */}
+        <div className="top-bar">
+          <span className="time">{currentTime}</span>
+          <button className="settings-button">⚙️</button>
         </div>
-      </section>
 
-      {/* Section des membres de la famille */}
-      <section className="family-status">
-        <h2>Démarrer un nouveau jam </h2>
-        <h3>Sélection des membres de la partie</h3>
-        <ul>
-          {familyMembers.map((member, index) => (
-            <li
-              key={index}
-              className={`family-member ${member.isOnline ? 'online' : 'offline'} ${
-                selectedMembers.includes(member.name) ? 'selected' : ''
-              }`}
-              onClick={() => toggleMemberSelection(member.name)}
-            >
-              <span className="member-name">{member.name}</span>
-              <span className="status">
-                {member.isOnline ? '🟢 En ligne' : '🔴 Hors ligne'}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Section pour lancer le jeu */}
-      <section className="game-launcher">
-        <button onClick={handleStartGame} className="start-game-button">
-          Démarrer le jeu
-        </button>
-      </section>
+        {/* Section pour lancer "Start Liking" */}
+        <section className="liking-launcher">
+          <button onClick={handleStartLiking} className="start-liking-button">
+            Start Liking
+          </button>
+        </section>
+      </div>
+      <BottomMenuBar /> {/* Menu toujours visible */}
     </div>
   );
 };

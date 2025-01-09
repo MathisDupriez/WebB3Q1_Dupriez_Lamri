@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './familyMovieCard.sass';
-import FamilyMovieCard from '../FamilyMovieCard';
+import FamilyMovieCard from './FamilyMovieCard';
 
 interface Movie {
     id: number;

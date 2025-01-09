@@ -8,8 +8,6 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated } = useLogin();
-console.log(useLogin());
-  console.log(isAuthenticated);
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 

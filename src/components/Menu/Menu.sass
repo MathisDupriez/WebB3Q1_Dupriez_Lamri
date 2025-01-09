@@ -1,0 +1,21 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+.bottom-menu-bar
+  @apply fixed bottom-0 left-0 right-0 h-16 bg-white flex justify-around items-center border-t border-gray-300 shadow-md z-50
+
+  .menu-item
+    @apply flex flex-col items-center justify-center text-gray-600 cursor-pointer transition-all duration-200 ease-in-out
+
+    &.active
+      @apply text-blue-500
+
+    &:hover
+      @apply text-blue-400
+
+    .icon
+      @apply text-xl
+
+    .label
+      @apply text-xs mt-1 text-center
