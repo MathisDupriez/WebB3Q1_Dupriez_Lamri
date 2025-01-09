@@ -82,12 +82,6 @@ const BaseMovieSwiper: React.FC<BaseSwiperProps> = ({
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent rounded-lg" />
 
-          {mode === 'family' && (
-            <div className="absolute top-8 right-8 bg-white/90 px-4 py-2 rounded-full text-lg shadow-lg flex items-center gap-2 z-20">
-              <span className="text-red-500">❤️</span>
-              <span className="font-bold">{likes}</span>
-            </div>
-          )}
 
           {/* Toggle button */}
           <div 

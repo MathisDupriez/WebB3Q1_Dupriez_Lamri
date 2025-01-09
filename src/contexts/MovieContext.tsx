@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import MovieApiService from '../utils/Api/MovieApiService';
 import LikeApiService from '../utils/Api/LikeApiService';
 import Movie from '../model/Movie';
-import { useUser } from './UserContext'; // Importez le contexte utilisateur
+import { useUser } from './UserContext';
 
 interface MovieContextType {
     movies: Movie[];
@@ -18,14 +18,13 @@ interface MovieContextType {
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { user } = useUser(); // Récupérer l'utilisateur à partir du UserContext
+    const { user } = useUser();
     const [movies, setMovies] = useState<Movie[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isFamily, setIsFamily] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Fetch movies on component mount or when `isFamily` changes
     useEffect(() => {
         fetchMovies();
     }, [isFamily]);
@@ -42,16 +41,22 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             let newMovies: Movie[] = [];
 
             if (isFamily && user?.familyId) {
-                // Fetch family movies
-                newMovies = await MovieApiService.fetchFamilyMovies(user.familyId);
-                console.log('Fetched family movies:', newMovies);
+                // Étape 1 : Récupérer les films likés par la famille
+                const familyLikedMovies = await MovieApiService.fetchFamilyMovies(user.familyId);
+                console.log('Fetched family liked movies:', familyLikedMovies);
+
+                // Étape 2 : Ajouter les films généraux après les films likés
+                const generalMovies = await MovieApiService.fetchMovies();
+                console.log('Fetched general movies:', generalMovies);
+
+                newMovies = [...familyLikedMovies, ...generalMovies];
             } else {
-                // Fetch general movies
+                // Mode normal : récupérer uniquement les films généraux
                 newMovies = await MovieApiService.fetchMovies();
                 console.log('Fetched general movies:', newMovies);
             }
 
-            setMovies(newMovies);
+            setMovies((prev) => [...prev, ...newMovies]);
             setCurrentPage((prev) => prev + 1);
         } catch (error) {
             console.error('Erreur lors du chargement des films:', error);
@@ -67,7 +72,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
         try {
             const movie = movies[currentIndex];
-            if (movie || isFamily) {
+            if (movie) {
                 await LikeApiService.createLike(user.id, movie.id, false); // Dislike
                 console.log(`Disliked movie: ${movie.title}`);
             }
@@ -79,13 +84,13 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleSwipeRight = async () => {
-        if (!user ) {
+        if (!user) {
             console.error('User not found. Cannot like movie.');
             return;
         }
         try {
             const movie = movies[currentIndex];
-            if (movie || isFamily) {
+            if (movie) {
                 await LikeApiService.createLike(user.id, movie.id, true); // Like
                 console.log(`Liked movie: ${movie.title}`);
             }
@@ -98,7 +103,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const toggleFamilyMode = () => {
         setIsFamily((prev) => !prev);
-        setMovies([]); // Clear movies before fetching new ones
+        setMovies([]);
         setCurrentIndex(0);
         setCurrentPage(1);
     };
