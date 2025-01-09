@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoginApiService from '../utils/Api/loginApiService';
+import { useUser } from './UserContext';
+import User from '../model/User'; // Import de la classe User
 
 type LoginContextType = {
   isAuthenticated: boolean;
@@ -17,15 +19,14 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useUser(); // Accès au UserContext
 
-  // Vérifie si un token est présent dans localStorage au chargement
+  // Vérifie si un token est présent au chargement
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    console.log("token vérifié", token);
+    const token = LoginApiService.getToken();
     if (token) {
       setIsAuthenticated(true);
-      
-      navigate('/');
+      navigate('/'); // Redirection si l'utilisateur est déjà connecté
     }
   }, []);
 
@@ -34,20 +35,24 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     setErrorMessage(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/login', { email, password });
-      const { token } = response.data;
+      const { token, user: userData } = await LoginApiService.login(email, password);
 
       if (token) {
-        localStorage.setItem('authToken', token);
+        LoginApiService.setToken(token); // Stocke le token
         setIsAuthenticated(true);
-        navigate('/'); // Redirection vers la page d'accueil après login
+
+        // Création d'une instance User
+        const user = new User(userData.id, userData.email);
+        setUser(user); // Mise à jour du UserContext
+
+        navigate('/'); // Redirection après login
       } else {
         throw new Error('No token received.');
       }
     } catch (error: unknown) {
       setErrorMessage(
-        axios.isAxiosError(error)
-          ? error.response?.data?.message || 'Login failed. Please check your credentials.'
+        error instanceof Error
+          ? error.message
           : 'An unexpected error occurred.'
       );
     } finally {
@@ -56,9 +61,10 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    LoginApiService.clearToken(); // Supprime le token
     setIsAuthenticated(false);
-    navigate('/login'); // Redirection vers la page de connexion après déconnexion
+    setUser(null); // Réinitialise les données utilisateur
+    navigate('/login'); // Redirection après logout
   };
 
   return (
