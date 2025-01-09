@@ -1,4 +1,4 @@
-import ApiService from './ApiService';
+import ApiService from '../ApiService';
 
 class FamilyApiService {
     private apiService = ApiService.getInstance();

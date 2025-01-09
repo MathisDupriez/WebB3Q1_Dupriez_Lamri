@@ -1,4 +1,4 @@
-import ApiService from './ApiService'; // Import de ton ApiService
+import ApiService from '../ApiService'; // Import de ton ApiService
 import Movie from '../../model/Movie';
 
 class MovieApiService {

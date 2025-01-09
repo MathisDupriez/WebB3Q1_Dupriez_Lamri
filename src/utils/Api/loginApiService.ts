@@ -1,4 +1,4 @@
-import ApiService from './ApiService'; // Import de ton ApiService
+import ApiService from '../ApiService'; // Import de ton ApiService
 
 class LoginApiService {
     private apiService = ApiService.getInstance();
