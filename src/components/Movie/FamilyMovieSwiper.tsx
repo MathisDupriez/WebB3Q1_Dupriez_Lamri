@@ -3,12 +3,15 @@ import { useMovieContext } from '../../contexts/MovieContext';
 import BaseMovieSwiper from './BaseMovieSwiper';
 
 const FamilyMovieSwiper: React.FC = () => {
+
   const {
-    currentMovie,
-    isLoading,
-    toggleFamilyMode,
-    isFamily,
-  } = useMovieContext();
+      currentMovie,
+      isLoading,
+      handleSwipeLeft,
+      handleSwipeRight,
+      toggleFamilyMode,
+      isFamily,
+    } = useMovieContext();
 
   const dragStartX = useRef(0);
   const dragCurrentX = useRef(0);
@@ -55,13 +58,19 @@ const FamilyMovieSwiper: React.FC = () => {
         imageRef.current.style.transform = `translateX(${targetX}px) rotate(${targetRotation}deg)`;
         
         setTimeout(() => {
-          // Juste passer au film suivant sans action
+          if (deltaX > 0) {
+            handleSwipeRight();
+          } else {
+            handleSwipeLeft();
+          }
+          // Reset après l'animation
           if (imageRef.current) {
             imageRef.current.style.transition = 'none';
             imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
           }
         }, 300);
       } else {
+        // Retour à la position initiale si le swipe n'est pas assez ample
         imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
       }
     }

@@ -1,8 +1,12 @@
 export default class User {
-    public id : string;
+    public id : number;
     public email : string;
-    constructor(id : string, email : string) {
+    public username : string = '';
+    public familyId : number;
+    constructor(id : number, email : string, username : string, familiID : number) {
         this.id = id;
         this.email = email;
+        this.username = username;
+        this.familyId = familiID;
     }
 }
