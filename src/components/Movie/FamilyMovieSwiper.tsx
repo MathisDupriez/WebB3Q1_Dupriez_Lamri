@@ -2,12 +2,10 @@ import React, { useRef } from 'react';
 import { useMovieContext } from '../../contexts/MovieContext';
 import BaseMovieSwiper from './BaseMovieSwiper';
 
-const MovieSwiper: React.FC = () => {
+const FamilyMovieSwiper: React.FC = () => {
   const {
     currentMovie,
     isLoading,
-    handleSwipeLeft,
-    handleSwipeRight,
     toggleFamilyMode,
     isFamily,
   } = useMovieContext();
@@ -16,6 +14,12 @@ const MovieSwiper: React.FC = () => {
   const dragCurrentX = useRef(0);
   const imageRef = useRef<HTMLImageElement>(null);
 
+  const handleMarkAsWatched = () => {
+    // Logique à implémenter plus tard
+    console.log('Marqué comme vu');
+  };
+
+  // Mêmes gestionnaires de drag que MovieSwiper
   const handleDragStart = (e: React.TouchEvent) => {
     e.preventDefault();
     const touch = e.touches[0];
@@ -51,19 +55,13 @@ const MovieSwiper: React.FC = () => {
         imageRef.current.style.transform = `translateX(${targetX}px) rotate(${targetRotation}deg)`;
         
         setTimeout(() => {
-          if (deltaX > 0) {
-            handleSwipeRight();
-          } else {
-            handleSwipeLeft();
-          }
-          // Reset après l'animation
+          // Juste passer au film suivant sans action
           if (imageRef.current) {
             imageRef.current.style.transition = 'none';
             imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
           }
         }, 300);
       } else {
-        // Retour à la position initiale si le swipe n'est pas assez ample
         imageRef.current.style.transform = 'translateX(0) rotate(0deg)';
       }
     }
@@ -99,12 +97,12 @@ const MovieSwiper: React.FC = () => {
 
   return (
     <BaseMovieSwiper
-      mode="normal"
+      mode="family"
       currentMovie={currentMovie}
       isLoading={isLoading}
       isFamily={isFamily}
-      onSwipeLeft={handleSwipeLeft}
-      onSwipeRight={handleSwipeRight}
+      likes={2} // À remplacer par la vraie logique de comptage !!!
+      onMarkAsWatched={handleMarkAsWatched}
       toggleFamilyMode={toggleFamilyMode}
       handleDragStart={handleDragStart}
       handleDragMove={handleDragMove}
@@ -117,4 +115,4 @@ const MovieSwiper: React.FC = () => {
   );
 };
 
-export default MovieSwiper;
+export default FamilyMovieSwiper;

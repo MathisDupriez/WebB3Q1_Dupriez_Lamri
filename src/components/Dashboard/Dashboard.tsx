@@ -23,6 +23,11 @@ const Dashboard: React.FC = () => {
     navigate('/like');
   };
 
+  // naviguer vers la page "Family choices"
+  const handleFamilyChoices = () => {
+    navigate('/swiperfamily');
+  };
+
   return (
     <div>
       <div className="dashboard">
@@ -33,10 +38,18 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Section pour lancer "Start Liking" */}
-        <section className="liking-launcher">
-          <button onClick={handleStartLiking} className="start-liking-button">
-            Start Liking
+        <section className="liking-launcher flex flex-col gap-4">
+          <button onClick={handleStartLiking} className="start-liking-button bg-blue-500 text-white text-base py-2 px-5 rounded-md hover:bg-blue-700 transition-colors duration-200">
+            Commencer à liker
           </button>
+
+          <button 
+            onClick={handleFamilyChoices}
+            className="start-liking-button bg-purple-500 text-white text-base py-2 px-5 rounded-md hover:bg-purple-700 transition-colors duration-200"
+          >
+          Voir les choix de la famille
+          </button>
+
         </section>
       </div>
       <BottomMenuBar /> {/* Menu toujours visible */}
