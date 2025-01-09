@@ -13,6 +13,7 @@ import { UserProvider } from './contexts/UserContext';
 import { MovieProvider } from './contexts/MovieContext';
 import { FamilyProvider } from './contexts/FamilyContext';
 import FamilyMovieSwiper from './components/Movie/FamilyMovieSwiper';
+import MovieDetails from './components/Movie/MovieDetails';
 
 const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -73,6 +74,14 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <FamilyMovieSwiper />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/movie-details" 
+            element={
+              <ProtectedRoute>
+                <MovieDetails />
               </ProtectedRoute>
             } 
           />

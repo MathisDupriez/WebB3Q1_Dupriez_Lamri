@@ -51,7 +51,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 console.log('Fetched general movies:', newMovies);
             }
 
-            setMovies((prev) => [...prev, ...newMovies]);
+            setMovies(newMovies);
             setCurrentPage((prev) => prev + 1);
         } catch (error) {
             console.error('Erreur lors du chargement des films:', error);
